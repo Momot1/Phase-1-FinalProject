@@ -48,6 +48,9 @@ function displayGameInfo(result){
     const title = document.createElement('h4')    
     const price = document.createElement('p')
     const link = document.createElement('p')
+    const likeBtn = document.createElement('button')
+    likeBtn.textContent = '\u2661'
+    likeBtn.style.background = "white";
 
     container.innerHTML = ''
     title.textContent = result.external
@@ -56,4 +59,13 @@ function displayGameInfo(result){
     container.appendChild(title)
     container.appendChild(price)
     container.appendChild(link)
+    container.appendChild(likeBtn)
+
+    likeBtn.addEventListener('click', () => {
+        if(likeBtn.textContent === '\u2661'){
+            likeBtn.textContent = '\u2665'
+        } else{
+            likeBtn.textContent = '\u2661'
+        }
+    })
 }
