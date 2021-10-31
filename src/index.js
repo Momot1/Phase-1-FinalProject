@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     dealWithDom()
+    grabGamesAndUpdateDom()
 })
 
 function dealWithDom(){
@@ -16,7 +17,8 @@ function getUserInput(){
     return document.getElementById('search-form').querySelector('input').value
 }
 
-function grabGamesAndUpdateDom(search){
+function grabGamesAndUpdateDom(search = 'batman'){
+    document.getElementById('results').querySelector('h2').textContent = `Results for ${search}`
     fetch(`https://www.cheapshark.com/api/1.0/games?title=${search}`)
     .then(resp => resp.json())
     .then(results => {
@@ -64,8 +66,22 @@ function displayGameInfo(result){
     likeBtn.addEventListener('click', () => {
         if(likeBtn.textContent === '\u2661'){
             likeBtn.textContent = '\u2665'
+            dealWithFavorite(result)
         } else{
             likeBtn.textContent = '\u2661'
+            dealWithFavorite(result, false)
         }
     })
+}
+
+
+function dealWithFavorite(result, isFavorite=true){
+    let method
+    if(isFavorite === true){
+        method = 'POST'
+    } else {
+        method = 'DELETE'
+    }
+
+
 }
