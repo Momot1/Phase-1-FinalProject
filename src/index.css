@@ -1,0 +1,80 @@
+body{
+    /* overflow: hidden; */
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    background-color: rgb(102, 102, 102);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width:100%;
+    height: 10%;
+}
+
+main{
+    background-color: silver;
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    height: 90%;
+}
+
+#favorites{
+    float: left;
+    width: 20%;
+    height: 100%;
+
+}
+
+#results{
+    float: left;
+    width: calc(80% - 5px);
+    height: 100%;
+}
+
+#seperator{
+    float: left;
+    background-color: black;
+    width: 5px;
+    height: 100%;
+}
+
+.headers{
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+  }
+  
+ul li:before {
+    content: '\2014';
+    position: absolute;
+    margin-left: -20px;
+}
+
+
+
+#notify-form{
+    background-color: teal;
+    width: 25%;
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+    left: 47.5%;
+    padding: 5px 5px 10px 5px;
+}
+
+#name, #email, #price, #submit{
+    width: calc(100% - 10px);
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* .hidden{
+    display: none;
+} */
