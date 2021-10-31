@@ -66,22 +66,26 @@ function displayGameInfo(result){
     likeBtn.addEventListener('click', () => {
         if(likeBtn.textContent === '\u2661'){
             likeBtn.textContent = '\u2665'
-            dealWithFavorite(result)
+            displayFavorites(result)
         } else{
             likeBtn.textContent = '\u2661'
-            dealWithFavorite(result, false)
+            displayFavorites(result, false)
         }
     })
 }
 
-
-function dealWithFavorite(result, isFavorite=true){
-    let method
-    if(isFavorite === true){
-        method = 'POST'
-    } else {
-        method = 'DELETE'
+function displayFavorites(result, add=true){
+    const container = document.getElementById('favorites').querySelector('ul')
+    if(add === true){    
+        const title = document.createElement('li')
+        title.textContent = result.external
+        container.appendChild(title)
+    } else{
+        const results = container.querySelectorAll('li')
+        results.forEach(item => {
+            if(item.textContent === result.external){
+                item.remove()
+            }
+        })
     }
-
-
 }
