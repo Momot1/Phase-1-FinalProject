@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function dealWithDom(){
     const searchBar = document.getElementById('search-form')
     searchBar.addEventListener('submit', e => {
+        document.getElementById('all-results').className = ''
+        document.getElementById('chosen-result').className = ''
+        document.getElementById('favorite-displayed').className = 'hidden'
+        document.getElementById('chosen-result').innerHTML = ''
         e.preventDefault()
         const userSearch = getUserInput()
         grabGamesAndUpdateDom(userSearch)
@@ -80,6 +84,9 @@ function displayFavorites(result, add=true){
         const title = document.createElement('li')
         title.textContent = result.external
         container.appendChild(title)
+        title.addEventListener('click', () => {
+            dealWithFavoriteClick(result)
+        })
     } else{
         const results = container.querySelectorAll('li')
         results.forEach(item => {
@@ -88,4 +95,13 @@ function displayFavorites(result, add=true){
             }
         })
     }
+}
+
+function dealWithFavoriteClick(result){
+    document.getElementById('all-results').className = 'hidden'
+    document.getElementById('chosen-result').className = 'hidden'
+    const container = document.getElementById('favorite-displayed')
+    document.getElementById('results').querySelector('h2').textContent = `Result for ${result.external}`
+
+    container.className = ''
 }
