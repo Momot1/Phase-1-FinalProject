@@ -14,6 +14,10 @@ header {
     height: 10%;
 }
 
+h1{
+    font-size: 40px;
+}
+
 main{
     background-color: silver;
     width: 100%;
@@ -35,6 +39,18 @@ main{
     height: 100%;
 }
 
+#all-results{
+    float: left;
+    width: 50%;
+    background-color: chartreuse;
+}
+
+#chosen-result{
+    float: left;
+    width: 50%;
+    background-color: chocolate;
+}
+
 #seperator{
     float: left;
     background-color: black;
@@ -44,6 +60,8 @@ main{
 
 .headers{
     text-align: center;
+    font-size: 35px;
+    font-family: sans-serif;
 }
 
 ul {
@@ -56,16 +74,15 @@ ul li:before {
     margin-left: -20px;
 }
 
-
-
 #notify-form{
-    background-color: teal;
+    background-color: red;
     width: 25%;
     text-align: center;
     font-size: 30px;
+    font-weight: bold;
     position: absolute;
     left: 47.5%;
-    padding: 5px 5px 10px 5px;
+    padding: 5px 5px 8px 5px;
 }
 
 #name, #email, #price, #submit{
@@ -75,6 +92,6 @@ ul li:before {
     padding-bottom: 5px;
 }
 
-/* .hidden{
+.hidden{
     display: none;
-} */
+}
