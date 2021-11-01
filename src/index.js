@@ -105,6 +105,7 @@ function displayFavorites(result, add=true){
 }
 
 function dealWithFavoriteClick(result){
+    console.log(result)
     document.getElementById('all-results').className = 'hidden'
     document.getElementById('chosen-result').className = 'hidden'
     
@@ -114,10 +115,10 @@ function dealWithFavoriteClick(result){
     container.className = ''
     displayGameInfo(result, LIKED, document.getElementById('favorite-result-info'))
 
+    dealWithNotifyForm(result)
 }
 
 function checkLikedStatus(result){
-    console.log('I got here')
     const results = document.getElementById('favorites').querySelector('ul').querySelectorAll('li')
     let test 
     for(item of results){
@@ -128,5 +129,24 @@ function checkLikedStatus(result){
     }
     if(test === true) return LIKED
     return UNLIKED
+}
 
+function dealWithNotifyForm(result){
+    const form = document.getElementById('notify-form')
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        const name = e.target.querySelectorAll('input')[0].value
+        const email = e.target.querySelectorAll('input')[1].value
+        const notifyPrice = e.target.querySelectorAll('input')[2].value
+        console.log(name)
+        console.log(email)
+        console.log(notifyPrice)
+        fetch(`https://www.cheapshark.com/api/1.0/alerts?action=set&email=${email}&gameID=${result.gameID}&price=${notifyPrice}`)
+        .then(resp => resp.json())
+        .then(data => {
+            if(data === true){
+                alert(`You will be notified when the game reaches $${notifyPrice}`)
+            }
+        })
+    })
 }
