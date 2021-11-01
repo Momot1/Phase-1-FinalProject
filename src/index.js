@@ -5,6 +5,7 @@ const LIKED = '\u2665'
 document.addEventListener('DOMContentLoaded', () => {
     dealWithDom()
     grabGamesAndUpdateDom()
+    grabFavorites()
 })
 
 function dealWithDom(){
@@ -26,7 +27,7 @@ function getUserInput(){
     return document.getElementById('search-form').querySelector('input').value
 }
 
-function grabGamesAndUpdateDom(search = 'batman'){
+function grabGamesAndUpdateDom(search = 'Grand Theft Auto'){
     document.getElementById('results').querySelector('h2').textContent = `Results for ${search}`
     fetch(`https://www.cheapshark.com/api/1.0/games?title=${search}`)
     .then(resp => resp.json())
@@ -75,9 +76,11 @@ function displayGameInfo(result, like = UNLIKED, container = document.getElement
     likeBtn.addEventListener('click', () => {
         if(likeBtn.textContent === UNLIKED){
             likeBtn.textContent = LIKED
-            displayFavorites(result)
+            //displayFavorites(result)
+            addLikeToDB(result)
         } else{
             likeBtn.textContent = UNLIKED
+            deleteLikedGame(result)
             displayFavorites(result, false)
         }
     })
@@ -103,13 +106,13 @@ function displayFavorites(result, add=true){
 }
 
 function dealWithFavoriteClick(result){
-    console.log(result)
     document.getElementById('all-results').className = 'hidden'
     document.getElementById('chosen-result').className = 'hidden'
-    
-    document.getElementById('results').querySelector('h2').textContent = `Result for ${result.external}`
     const container = document.getElementById('favorite-result')
+    
     document.getElementById('favorite-result-info').innerHTML = ''
+    document.getElementById('results').querySelector('h2').textContent = `Result for ${result.external}`
+
     container.className = ''
     displayGameInfo(result, LIKED, document.getElementById('favorite-result-info'))
 
@@ -118,14 +121,11 @@ function dealWithFavoriteClick(result){
 
 function checkLikedStatus(result){
     const results = document.getElementById('favorites').querySelector('ul').querySelectorAll('li')
-    let test 
-    for(item of results){
-        if(item.textContent === result.external){
-            test = true
-            break
-        }
-    }
-    if(test === true) return LIKED
+    let testResult 
+    results.forEach(item => {
+        if(item.textContent === result.external) testResult = true
+    })
+    if(testResult === true) return LIKED
     return UNLIKED
 }
 
@@ -139,14 +139,43 @@ function dealWithNotifyForm(result){
 
         fetch(`https://www.cheapshark.com/api/1.0/alerts?action=set&email=${email}&gameID=${result.gameID}&price=${notifyPrice}`)
         .then(resp => resp.json())
-        .then(data => {
-            if(data === true){
-                alert(`Thanks ${name}, you will be notified when the game reaches $${notifyPrice}`)
-            } else{
-                alert('There was an error with the information you provided, please try again')
-            }
+        .then(resp => {
+            resp === true?alert(`Thanks ${name}, you will be notified when the game reaches $${notifyPrice}`)
+            :alert('There was an error with the information you provided, please try again')
         })
 
         form.reset()
+    })
+}
+
+function addLikeToDB(result){
+    fetch('http://localhost:3000/favorites', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: result.gameID,
+            result
+        })
+    })
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result)
+        displayFavorites(result.result)
+    })
+}
+
+function deleteLikedGame(result){
+    fetch(`http://localhost:3000/favorites/${result.gameID}`, {
+        method: 'DELETE'
+    })
+}
+
+function grabFavorites(){
+    fetch('http://localhost:3000/favorites')
+    .then(resp => resp.json())
+    .then(results => {
+        results.forEach(result => displayFavorites(result.result))
     })
 }
