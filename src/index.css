@@ -34,7 +34,8 @@ main{
 }
 
 #results{
-    float: left;
+    position: absolute;
+    left: 20%;
     width: calc(80% - 5px);
     height: 100%;
 }
@@ -42,13 +43,11 @@ main{
 #all-results{
     float: left;
     width: 50%;
-    background-color: chartreuse;
 }
 
 #chosen-result{
     float: left;
     width: 50%;
-    background-color: chocolate;
 }
 
 #seperator{
@@ -56,6 +55,11 @@ main{
     background-color: black;
     width: 5px;
     height: 100%;
+}
+
+#favorite-result-info{
+    text-align: center;
+    padding-bottom: 10px;
 }
 
 .headers{
@@ -81,7 +85,7 @@ ul li:before {
     font-size: 30px;
     font-weight: bold;
     position: absolute;
-    left: 47.5%;
+    left: 37.5%;
     padding: 5px 5px 8px 5px;
 }
 

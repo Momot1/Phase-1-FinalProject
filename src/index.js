@@ -1,3 +1,9 @@
+const UNLIKED = '\u2661'
+const LIKED = '\u2665'
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     dealWithDom()
     grabGamesAndUpdateDom()
@@ -8,8 +14,9 @@ function dealWithDom(){
     searchBar.addEventListener('submit', e => {
         document.getElementById('all-results').className = ''
         document.getElementById('chosen-result').className = ''
-        document.getElementById('favorite-displayed').className = 'hidden'
+        document.getElementById('favorite-result').className = 'hidden'
         document.getElementById('chosen-result').innerHTML = ''
+
         e.preventDefault()
         const userSearch = getUserInput()
         grabGamesAndUpdateDom(userSearch)
@@ -36,10 +43,13 @@ function displayResults(results){
     results.forEach(result => {
         const game = displayResult(result, resultsList)
         game.addEventListener('click', () => {
-            displayGameInfo(result)
+            document.getElementById('chosen-result').innerHTML = ''
+            let like = checkLikedStatus(result)
+            displayGameInfo(result, like)
         })
     });
 }
+
 
 function displayResult(result, resultsList){
     const title = document.createElement('li')
@@ -48,17 +58,14 @@ function displayResult(result, resultsList){
     return title
 }
 
-function displayGameInfo(result){
-    console.log(result)
-    const container = document.getElementById('chosen-result')
+function displayGameInfo(result, like = UNLIKED, container = document.getElementById('chosen-result')){
     const title = document.createElement('h4')    
     const price = document.createElement('p')
     const link = document.createElement('p')
     const likeBtn = document.createElement('button')
-    likeBtn.textContent = '\u2661'
+    likeBtn.textContent = like
     likeBtn.style.background = "white";
 
-    container.innerHTML = ''
     title.textContent = result.external
     price.textContent = `Cheapest price: ${result.cheapest}`
     link.innerHTML = `<a href = 'https://www.cheapshark.com/redirect?dealID=${result.cheapestDealID}'>Purchase Link`
@@ -68,11 +75,11 @@ function displayGameInfo(result){
     container.appendChild(likeBtn)
 
     likeBtn.addEventListener('click', () => {
-        if(likeBtn.textContent === '\u2661'){
-            likeBtn.textContent = '\u2665'
+        if(likeBtn.textContent === UNLIKED){
+            likeBtn.textContent = LIKED
             displayFavorites(result)
         } else{
-            likeBtn.textContent = '\u2661'
+            likeBtn.textContent = UNLIKED
             displayFavorites(result, false)
         }
     })
@@ -100,8 +107,26 @@ function displayFavorites(result, add=true){
 function dealWithFavoriteClick(result){
     document.getElementById('all-results').className = 'hidden'
     document.getElementById('chosen-result').className = 'hidden'
-    const container = document.getElementById('favorite-displayed')
+    
     document.getElementById('results').querySelector('h2').textContent = `Result for ${result.external}`
-
+    const container = document.getElementById('favorite-result')
+    document.getElementById('favorite-result-info').innerHTML = ''
     container.className = ''
+    displayGameInfo(result, LIKED, document.getElementById('favorite-result-info'))
+
+}
+
+function checkLikedStatus(result){
+    console.log('I got here')
+    const results = document.getElementById('favorites').querySelector('ul').querySelectorAll('li')
+    let test 
+    for(item of results){
+        if(item.textContent === result.external){
+            test = true
+            break
+        }
+    }
+    if(test === true) return LIKED
+    return UNLIKED
+
 }

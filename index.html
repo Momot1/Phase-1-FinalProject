@@ -3,7 +3,7 @@
     <head>
         <title>Phase-1 Final Project</title>
         <link rel='stylesheet' href='src/index.css'/>
-        <script src = 'src/index.js'></script>
+        <script src = 'src/index.js' defer></script>
     </head>
     <body>
         <header>
@@ -25,13 +25,7 @@
 
             </section>
 
-            <section id = 'favorite-displayed' class = 'hidden'>
-                <p>TEST</p>
-            </section>
-
-
-
-            <section id='results'>
+            <section id='results' class = ''>
                 <h2 class = 'headers'>Results</h2>
                 <div id = 'all-results' class = ''>
                     <ul>
@@ -42,15 +36,22 @@
 
                 </div>
 
-                <form id = 'notify-form' class = 'hidden'>
-                    <label for='name'>Name</label><br>
-                    <input type='text' id='name' name='name' placeholder='Enter your name' required/><br>
-                    <label for='email'>Email</label><br>
-                    <input type='email' id='email' name='email' placeholder='Enter your email' required/><br>
-                    <label for='price'>Price to get notified at</label><br>
-                    <input type='number' id='price' name='price' placeholder='Enter price to notify at' required/><br> 
-                    <input type='submit' id='submit' value="Notify">
-                </form>
+                <div id = 'favorite-result' class = 'hidden'>
+                    <div id='favorite-result-info'>
+                        
+                    </div>
+                    <form id = 'notify-form'>
+                        <label for='name'>Name</label><br>
+                        <input type='text' id='name' name='name' placeholder='Enter your name' required/><br>
+                        <label for='email'>Email</label><br>
+                        <input type='email' id='email' name='email' placeholder='Enter your email' required/><br>
+                        <label for='price'>Price to get notified at</label><br>
+                        <input type='number' id='price' name='price' placeholder='Enter price to notify at' required/><br> 
+                        <input type='submit' id='submit' value="Notify">
+                    </form>
+                </div>
+
+                
             </section>
         </main>
     </body>
