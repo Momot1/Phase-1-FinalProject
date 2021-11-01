@@ -2,8 +2,6 @@ const UNLIKED = '\u2661'
 const LIKED = '\u2665'
 
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
     dealWithDom()
     grabGamesAndUpdateDom()
@@ -138,15 +136,17 @@ function dealWithNotifyForm(result){
         const name = e.target.querySelectorAll('input')[0].value
         const email = e.target.querySelectorAll('input')[1].value
         const notifyPrice = e.target.querySelectorAll('input')[2].value
-        console.log(name)
-        console.log(email)
-        console.log(notifyPrice)
+
         fetch(`https://www.cheapshark.com/api/1.0/alerts?action=set&email=${email}&gameID=${result.gameID}&price=${notifyPrice}`)
         .then(resp => resp.json())
         .then(data => {
             if(data === true){
-                alert(`You will be notified when the game reaches $${notifyPrice}`)
+                alert(`Thanks ${name}, you will be notified when the game reaches $${notifyPrice}`)
+            } else{
+                alert('There was an error with the information you provided, please try again')
             }
         })
+
+        form.reset()
     })
 }
