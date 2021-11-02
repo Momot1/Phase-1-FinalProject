@@ -30,7 +30,7 @@ main{
     float: left;
     width: 20%;
     height: 100%;
-
+    font-size: 25px;
 }
 
 #results{
@@ -38,6 +38,7 @@ main{
     left: 20%;
     width: calc(80% - 5px);
     height: 100%;
+    font-size: 20px;
 }
 
 #all-results{
@@ -98,4 +99,14 @@ ul li:before {
 
 .hidden{
     display: none;
+}
+
+h4{
+    font-size: 50px;
+    margin: 0;
+}
+
+p{
+    font-size: 30px;
+
 }

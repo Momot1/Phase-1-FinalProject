@@ -3,12 +3,12 @@ const LIKED = '\u2665'
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    dealWithDom()
+    dealWithSearch()
     grabGamesAndUpdateDom()
-    grabFavorites()
+    grabFavoritesAndDisplay()
 })
 
-function dealWithDom(){
+function dealWithSearch(){
     const searchBar = document.getElementById('search-form')
     searchBar.addEventListener('submit', e => {
         document.getElementById('all-results').className = ''
@@ -17,17 +17,13 @@ function dealWithDom(){
         document.getElementById('chosen-result').innerHTML = ''
 
         e.preventDefault()
-        const userSearch = getUserInput()
+        const userSearch = document.getElementById('search-form').querySelector('input').value
         grabGamesAndUpdateDom(userSearch)
         searchBar.reset()
     })
 }
 
-function getUserInput(){
-    return document.getElementById('search-form').querySelector('input').value
-}
-
-function grabGamesAndUpdateDom(search = 'Grand Theft Auto'){
+function grabGamesAndUpdateDom(search = 'Red Dead Redemption'){
     document.getElementById('results').querySelector('h2').textContent = `Results for ${search}`
     fetch(`https://www.cheapshark.com/api/1.0/games?title=${search}`)
     .then(resp => resp.json())
@@ -68,7 +64,9 @@ function displayGameInfo(result, like = UNLIKED, container = document.getElement
     title.textContent = result.external
     price.textContent = `Cheapest price: ${result.cheapest}`
     link.innerHTML = `<a href = 'https://www.cheapshark.com/redirect?dealID=${result.cheapestDealID}'>Purchase Link`
-    container.appendChild(title)
+    if(container === document.getElementById('chosen-result')){
+        container.appendChild(title)
+    }
     container.appendChild(price)
     container.appendChild(link)
     container.appendChild(likeBtn)
@@ -76,12 +74,14 @@ function displayGameInfo(result, like = UNLIKED, container = document.getElement
     likeBtn.addEventListener('click', () => {
         if(likeBtn.textContent === UNLIKED){
             likeBtn.textContent = LIKED
-            //displayFavorites(result)
+
+            displayFavorites(result)
             addLikeToDB(result)
         } else{
             likeBtn.textContent = UNLIKED
-            deleteLikedGame(result)
+
             displayFavorites(result, false)
+            deleteLikedGame(result)
         }
     })
 }
@@ -111,7 +111,7 @@ function dealWithFavoriteClick(result){
     const container = document.getElementById('favorite-result')
     
     document.getElementById('favorite-result-info').innerHTML = ''
-    document.getElementById('results').querySelector('h2').textContent = `Result for ${result.external}`
+    document.getElementById('results').querySelector('h2').textContent = `${result.external}`
 
     container.className = ''
     displayGameInfo(result, LIKED, document.getElementById('favorite-result-info'))
@@ -159,11 +159,6 @@ function addLikeToDB(result){
             result
         })
     })
-    .then(resp => resp.json())
-    .then(result => {
-        console.log(result)
-        displayFavorites(result.result)
-    })
 }
 
 function deleteLikedGame(result){
@@ -172,7 +167,7 @@ function deleteLikedGame(result){
     })
 }
 
-function grabFavorites(){
+function grabFavoritesAndDisplay(){
     fetch('http://localhost:3000/favorites')
     .then(resp => resp.json())
     .then(results => {
