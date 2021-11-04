@@ -62,14 +62,10 @@ function displayResult(result, resultsList){
     return title
 }
 
+//Sets each of the "information" containers equal to the same height so the page styles stays consistent no matter the size of the response of the API or the user screen size
 function setContainerHeights(){
-    const test = document.querySelector('header')
-    let test2 = test.clientHeight
-    console.log(test2)
-
     const resultsContainer = document.getElementById('results')
     const containerHeight = resultsContainer.clientHeight
-    console.log(containerHeight)
     
     resultsContainer.style.minHeight = `calc(100vh - ${document.querySelector('header').clientHeight}px)`
 
