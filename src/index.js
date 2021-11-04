@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Grabs the user search from the search bar and searches for specified search. Also sets class names to hidden or from hidden to make sure when the user is displaying a favorite result, the search will show up
 function dealWithSearch(){
     const searchBar = document.getElementById('search-form')
+    console.log(searchBar)
     searchBar.addEventListener('submit', e => {
         document.getElementById('all-results').className = ''
         document.getElementById('chosen-result').className = ''
@@ -48,6 +49,8 @@ function displayResults(results){
             displayGameInfo(result, like)
         })
     });
+
+    setContainerHeights()
 }
 
 // Displays each result to the user, returns the title of the result
@@ -56,6 +59,12 @@ function displayResult(result, resultsList){
     title.textContent = result.external
     resultsList.appendChild(title)
     return title
+}
+
+function setContainerHeights(){
+    const containerHeight = document.getElementById('results').clientHeight
+    document.getElementById('seperator').style.height = `${containerHeight}px`
+    document.getElementById('favorites').style.height = `${containerHeight}px`
 }
 
 // Displays the game information for the clicked title. Takes in the result, if the game has been liked, and a default container equal to the single result container
@@ -93,6 +102,8 @@ function displayGameInfo(result, like = UNLIKED, container = document.getElement
             deleteLikedGame(result)
         }
     })
+
+    setContainerHeights()
 }
 
 // Displays the favorites to the DOM

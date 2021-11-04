@@ -1,29 +1,28 @@
 body{
     /* overflow: hidden; */
     margin: 0;
+    padding: 0;
 }
 
 header {
     text-align: center;
-    background-color: rgb(102, 102, 102);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    background-color: rgb(138, 136, 136);
+    position: relative;
     width:100%;
-    height: 10%;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 
 h1{
     font-size: 40px;
+    margin-top: 0;
 }
 
 main{
-    background-color: silver;
+    background: silver;
     width: 100%;
     position: absolute;
-    top: 10%;
-    height: 90%;
+    height: 100%;
 }
 
 #favorites{
@@ -35,10 +34,14 @@ main{
 
 #results{
     position: absolute;
-    left: 20%;
+    left: calc(20% + 5px);
     width: calc(80% - 5px);
-    height: 100%;
     font-size: 20px;
+}
+
+#results, #favorites, #seperator {
+    background-color: silver;
+    min-height: 100%;
 }
 
 #all-results{
@@ -55,7 +58,6 @@ main{
     float: left;
     background-color: black;
     width: 5px;
-    height: 100%;
 }
 
 #favorite-result-info{
