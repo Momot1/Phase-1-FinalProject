@@ -5,6 +5,7 @@ const LIKED = '\u2665'
  //
 document.addEventListener('DOMContentLoaded', () => {
     dealWithSearch()
+    setContainerHeights()
     grabGamesAndUpdateDom()
     grabFavoritesAndDisplay()
 })
@@ -62,7 +63,16 @@ function displayResult(result, resultsList){
 }
 
 function setContainerHeights(){
-    const containerHeight = document.getElementById('results').clientHeight
+    const test = document.querySelector('header')
+    let test2 = test.clientHeight
+    console.log(test2)
+
+    const resultsContainer = document.getElementById('results')
+    const containerHeight = resultsContainer.clientHeight
+    console.log(containerHeight)
+    
+    resultsContainer.style.minHeight = `calc(100vh - ${document.querySelector('header').clientHeight}px)`
+
     document.getElementById('seperator').style.height = `${containerHeight}px`
     document.getElementById('favorites').style.height = `${containerHeight}px`
 }

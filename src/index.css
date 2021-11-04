@@ -19,10 +19,8 @@ h1{
 }
 
 main{
-    background: silver;
     width: 100%;
     position: absolute;
-    height: 100%;
 }
 
 #favorites{
@@ -39,9 +37,9 @@ main{
     font-size: 20px;
 }
 
-#results, #favorites, #seperator {
+#results, #favorites, #seperator, #main {
     background-color: silver;
-    min-height: 100%;
+    /* min-height: 1202px; */
 }
 
 #all-results{
