@@ -2,7 +2,7 @@
 const UNLIKED = '\u2661'
 const LIKED = '\u2665'
 
-
+ //
 document.addEventListener('DOMContentLoaded', () => {
     dealWithSearch()
     grabGamesAndUpdateDom()
