@@ -27,7 +27,8 @@ function dealWithSearch(){
     })
 }
 
-// Grabs the results from the search. Default search is search = to make it so when the website loads, there is some data already displayed
+// Grabs the results from the search. Default search is search = to make it so when the website loads, 
+//there is some data already displayed
 function grabGamesAndUpdateDom(search = 'Red Dead Redemption'){
     document.getElementById('results').querySelector('h2').textContent = `Results for ${search}`
     fetch(`https://www.cheapshark.com/api/1.0/games?title=${search}`)
